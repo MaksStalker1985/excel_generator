@@ -12,7 +12,6 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 import engine as eng
 from pathlib import Path
-from threading import Thread
 
 
 class Ui_MainWindow(object):
@@ -107,9 +106,7 @@ class Ui_MainWindow(object):
         eng.columns = self.spinBox.value()
         eng.steps = self.spinBox_3.value()
         if eng.readExcel(self.filename) == True:
-            t1 = Thread(target=eng.writeExcel)
-            t1.start()
-            t1.join()
+            eng.writeExcel()
 
     def OpenFileClicked(self):
         fname = QFileDialog.getOpenFileName(None, 'Open file', None, 'XLSX files(*.xlsx)')[0]
@@ -117,4 +114,3 @@ class Ui_MainWindow(object):
             path = Path(fname)
             self.filename = path
             self.lineEdit.setText(str(path))
-
